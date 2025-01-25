@@ -31,3 +31,18 @@ productionfiles/
 # OS-specific
 .DS_Store
 Thumbs.db
+
+# Ignore video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+*.wmv
+
+# Ignore audio files
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.aac
