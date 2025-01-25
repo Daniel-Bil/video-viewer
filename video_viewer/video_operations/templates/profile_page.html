@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+
+    <!-- <link rel="stylesheet" href="{% static 'login.css' %}"> -->
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/profile_page.css' %}">
+    <!-- <link rel="stylesheet" href="../static/video_page.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+    <title>Document</title>
+</head>
+<body>
+    <div class="first-section">
+        <div class="image-section">
+            <button id="prev-btn">previous</button>
+            {% if profile_image == 0 %}
+                <img id="profile-image" src="{% static 'images/trex.png' %}" alt="Trex">
+            {% elif profile_image == 1 %}
+                <img id="profile-image" src="{% static 'images/triceratops.png' %}" alt="Triceratops">
+            {% elif profile_image == 2 %}
+                <img id="profile-image" src="{% static 'images/stegozaur.png' %}" alt="Stegosaurus">
+            {% else %}
+                <img id="profile-image" src="{% static 'images/trex.png' %}" alt="Default Image">
+            {% endif %}
+            <button id="next-btn">next</button>
+        </div>
+            <p>{{ user.username }}</p>
+            <p>{{ user.email }}</p>
+            <a href="javascript:history.back()">Back</a>
+    </div>
+    <script>
+        const csrfToken = "{{ csrf_token }}";
+    </script>
+    <script src="{% static 'js/profile_page.js' %}"></script>
+        
+</body>
+</html>

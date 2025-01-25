@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+
+    <!-- <link rel="stylesheet" href="{% static 'login.css' %}"> -->
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/video_page.css' %}">
+    <!-- <link rel="stylesheet" href="../static/video_page.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+    <title>Document</title>
+</head>
+<body>
+    <!-- header -->
+    <nav>
+        <img src="{% static 'images/video-viewer-logo.png' %}" alt="logo Video-Viewer" id="logo_img">
+        <a href="#">Other Projects</a>
+        <div class="profile-section">
+
+            {% if profile_image == 0 %}
+                <img id="profile-image" src="{% static 'images/trex.png' %}" alt="Trex">
+            {% elif profile_image == 1 %}
+                <img id="profile-image" src="{% static 'images/triceratops.png' %}" alt="Triceratops">
+            {% elif profile_image == 2 %}
+                <img id="profile-image" src="{% static 'images/stegozaur.png' %}" alt="Stegosaurus">
+            {% else %}
+                <img id="profile-image" src="{% static 'images/trex.png' %}" alt="Default Image">
+            {% endif %}
+
+            {% if user.is_authenticated %}
+                
+                <p>{{ user.username }}</p>
+                <a href="{% url 'profile' user.username %}">Your Profile</a>
+                <a href="{% url 'logout' %}">Log out</a>
+            {% else %}
+                
+                <p>You are not logged in. <a href="{% url 'login' %}">Log in here</a>.</p>
+            {% endif %}
+        </div>
+    </nav>
+    
+    <div class="first-section">
+        <div class="video-section-wrapper">
+            <div class="video-section">
+                <label class="video-label-wrapper" id="drop-area" for="upload-video">
+                    <input type="file" id="upload-video" accept="video/*" hidden>
+                    <div id="video-view">
+                        <i class="fa-solid fa-cloud-arrow-up fa-4x"></i>
+                        <p>Drag and drop or click here<br>to upload video</p>
+                        <span>Upload any videos from desktop</span>
+                    </div>
+                </label>
+                <div id="previewSection">
+                    <img id="gifPreview" style="display: none; width: 100%; max-width: 600px;" alt="GIF Preview">
+                    <video id="videoPreview" controls style="display: none; width: 100%; max-width: 600px;"></video>
+                    <button id="delete-video-button" style="display: none;"><i class="fa-regular fa-trash-can fa-2x"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="operation-section-wrapper">
+            <div class="operations-section">
+                <div class="operation-item-wrapper">
+                    <label class="operation-label-wrapper" for="flip_operation">
+                        <input type="checkbox" name="flip" id="flip_operation" hidden>
+                        <div class="operation-item-checkbox">
+                            <span>Flip</span>
+                            
+                            <i class="fa-solid fa-repeat"></i>
+                        </div>
+                    </label>
+                </div>
+                <div class="operation-item-wrapper">
+
+                    <div class="operation-div-wrapper">
+                        <button class="operation-button rotation-button" id="rotate-left"><i class="fa-solid fa-rotate-left fa-2x"></i></button>
+                        <span name="rotation" id="rotation-span">0</span>
+                        <button class="operation-button rotation-button" id="rotate-right"><i class="fa-solid fa-rotate-right fa-2x"></i></button>
+                    </div>
+
+                    
+                </div>
+                <div class="operation-item-wrapper">
+                    <div class="operation-div-wrapper">
+                        <button class="operation-button sound-button" id="volume-down"><i class="fa-solid fa-volume-low fa-2x"></i></button>
+                        <span name="volume" id="volume-span">1</span>
+                        <button class="operation-button sound-button" id="volume-up"><i class="fa-solid fa-volume-high fa-2x"></i></button>
+                    </div>
+                </div>
+                <div class="operation-item-wrapper">
+                    <label class="operation-label-wrapper" for="experimental_operation">
+                        <input type="checkbox" name="experimental" id="experimental_operation" hidden>
+                        <div class="operation-item-checkbox">
+                            <span>Experimental</span>
+                            
+                            <i class="fa-solid fa-flask"></i>
+                        </div>
+                    </label>
+                </div>
+                <div class="operation-item-wrapper">
+                    <div class="operation-div-wrapper">
+                        <select name="" id="resolution-select">
+                            <option value="(7680,4320)">7680 x 4320</option>
+                            <option value="(3840,2160)">3840 x 2160</option>
+                            <option value="(2560,1440)">2560 x 1440</option>
+                            <option value="(1920,1080)">1920 x 1080</option>
+                            <option value="(1280,720)">1280 x 720</option>
+                            <option value="(854,480)">854 x 480</option>
+                            <option value="(640,360)">640 x 360</option>
+                            <option value="(426,240)">426 x 240</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="operation-item-wrapper">
+                    <label class="operation-label-wrapper" for="mute_operation">
+                        <input type="checkbox" name="mute" id="mute_operation" hidden>
+                        <div class="operation-item-checkbox">
+                            <span>Mute</span>
+                            
+                            <i class="fa-solid fa-volume-none"></i>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <select id="extension-select">
+                <option value="MP4">MP4</option>
+                <option value="AVI">AVI</option>
+                <option value="MOV">MOV</option>
+                <option value="MP3">MP3</option>
+                <option value="GIF">GIF</option>
+            </select>
+            <button name="upload-button" id="upload-button"><span>Upload<i class="fa-solid fa-upload"></i></span></button>
+        </div>
+    </div>
+    <div class="second-section">
+        
+    </div>
+    <!-- <script src="../static/video_page.js"></script> -->
+    <script src="{% static 'js/video_page.js' %}"></script>
+</body>
+</html>

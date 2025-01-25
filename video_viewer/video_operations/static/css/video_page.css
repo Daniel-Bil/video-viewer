@@ -1,0 +1,224 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    background-image: url('../images/background_2.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.first-section, .second-section{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    min-height: 40vh;
+    width: 100%;
+    /* background-color: aqua; */
+    column-gap: 20px;
+    padding-top: 100px;
+}
+
+
+
+.operations-section, .video-section{
+    position: relative;
+    min-width: 400px;
+    height: 450px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.5);
+}
+
+.video-section{
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+}
+.operation-item-wrapper{
+    
+    
+    /* background-color: aquamarine; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.operation-item-checkbox{
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    user-select: none;
+}
+
+.operation-label-wrapper{
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(40px);
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 2em;
+    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.5);
+
+}
+
+.operation-div-wrapper{
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(40px);
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 2em;
+    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.5);
+}
+
+.operation-button{
+    background: transparent;
+    border-radius: 10px;
+}
+
+.sound-button, .rotation-button{
+    padding: 10px;
+    
+}
+
+
+.operation-label-wrapper:has(input[type="checkbox"]:checked) {
+    backdrop-filter: blur(5px);
+}
+
+#upload-button{
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid rgba(253, 253, 253, 0.5);
+    background: transparent;
+    backdrop-filter: blur(20px);
+    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+    font-size: 2em;
+    color: #fff;
+    &:hover{
+        backdrop-filter: blur(5px);
+        color: gold;
+    }
+}
+
+#drop-area{
+    width:500px;
+    height:300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+#video-view{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    border: 2px dashed black;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    span{
+        font-size: 12px;
+        display: block;
+        color: #777;
+    }
+}
+
+#delete-video-button{
+    position: absolute;
+    background: transparent;
+    top: 100px;
+    right: 10px;
+    opacity: 0.3;
+    &:hover{
+        opacity: 1;
+    }
+}
+
+
+/* -------------------------------- NAV BAR------------------------------ */
+
+nav{
+    position: fixed;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 30px;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    width: calc(100% - 60px);
+    border-bottom: solid 2px rgba(255, 255, 255, 0.5);
+    display: flex;
+    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    color:#fff;
+    img{
+        
+        height: 40px;
+
+    }
+    a{
+        color:white
+        &:active{
+            color:#fff
+            
+        }
+    }
+
+    .profile-section{
+        /* align-self: flex-end; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        img{
+        
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+    }
+}
+
+/* #logo_img{
+
+} */
+
+
+
+
+
+
+
+
+/* ------------------------------ NAV BAR END -------------------------- */

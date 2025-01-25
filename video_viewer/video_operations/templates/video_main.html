@@ -1,0 +1,80 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'icons/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/video_main.css' %}">
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<!--    <link rel="stylesheet" href='/video_viewer/video_operations/static/video_main.css'>-->
+    <title>Document</title>
+</head>
+<body>
+    <div id="horizontal_1">
+        <div id="section_1">
+            <form id="videoUploadForm" method="POST" enctype="multipart/form-data" action="/upload/">
+                {% csrf_token %}
+                <label for="videoFile">Choose a video file:</label>
+                <input type="file" id="videoFile" name="video" accept="video/*" required>
+                <button type="submit">Upload and Flip</button>
+            </form>
+            <p id="status"></p>
+
+            <div id="previewSection">
+                <img id="gifPreview" style="display: none; width: 100%; max-width: 600px;" alt="GIF Preview">
+                <video id="videoPreview" controls style="display: none; width: 100%; max-width: 600px;"></video>
+            </div>
+        </div>  
+        <div id="section_2">
+            <div class="button-row">
+                <input type="checkbox" id="toggle1" hidden>
+                <label for="toggle1" class="neomorphic-checkbox">
+                    <span class="text">flip</span>
+                </label>
+        
+                <input type="checkbox" id="toggle2" hidden>
+                <label for="toggle2" class="neomorphic-checkbox">
+                    <span class="text">gif</span>
+                </label>
+            </div>
+        
+            <div class="button-row">
+                <input type="checkbox" id="toggle3" hidden>
+                <label for="toggle3" class="neomorphic-checkbox">
+                    <span class="text">rotate</span>
+                </label>
+        
+                <input type="checkbox" id="toggle4" hidden>
+                <label for="toggle4" class="neomorphic-checkbox">
+                    <span class="text">extract audio</span>
+                </label>
+        
+                <input type="checkbox" id="toggle5" hidden>
+                <label for="toggle5" class="neomorphic-checkbox">
+                    <span class="text">change volume</span>
+                </label>
+            </div>
+        </div>  
+    </div>
+    <div id="horizontal_2">
+        <div id="section_3">
+            <p>User authenticated: {{ user.is_authenticated }}</p>
+            <p>Username: {{ user.username }}</p>
+            {% if user.is_authenticated %}
+
+                <p>Hello, {{ user.username }}!</p>
+                <a href="{% url 'logout' %}">Log out</a>
+            {% else %}
+                <p>You are not logged in. <a href="{% url 'login' %}">Log in here</a>.</p>
+            {% endif %}
+        </div>  
+    </div>
+
+
+     <script src="{% static 'js/video_main.js' %}"></script>
+<!--    <script src='/video_viewer/video_operations/static/video_main.js'></script>-->
+</body>
+</html>

@@ -1,0 +1,102 @@
+body{
+    background-color: white;
+    padding: 10px;
+    row-gap: 20px;
+    display: flex;
+    flex-direction: column;
+    font-family: system-ui, sans-serif;
+}
+
+#horizontal_1, #horizontal_2{
+    display: flex;
+    gap: 30px;
+    
+    justify-content: center;
+    align-items: center;
+
+}
+
+#section_1, #section_2, #section_3{
+    background-color: rgb(245, 245, 220);
+    border-radius: 5px;
+    border: solid 1px rgb(221, 221, 212)
+}
+#section_1{
+    width: 600px;
+    height: 337px;
+}
+
+#section_2{
+    display: grid;
+    width: 500px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
+    gap: 10px; /* Spacing between buttons */
+    padding: 10px;
+    background-color: rgb(245, 245, 220);
+    justify-content: center;
+}
+
+#section_3{
+    width: 900px;
+    height: 300px;
+}
+
+.operationButton{
+    width: 100px;
+    height: 50px;
+}
+
+.operationContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    /* height: 100vh; Center on the page */
+    background-color: rgba(224, 229, 236, 0); /* Background for neomorphic design */
+}
+
+/* Hide the default checkbox */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* Label styled as a neomorphic button */
+.neomorphic-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 50px;
+    background: rgb(245, 245, 220); /* Neutral background color */
+    border-radius: 25px; /* Rounded corners for button-like appearance */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.9); /* Neomorphic shadow */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transitions */
+
+    &:hover{
+        color: hsl(10 80% 50%);
+        scale: 1.1
+    }
+}
+
+/* Text inside the button */
+.neomorphic-checkbox .text {
+    font-size: 16px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+/* When the checkbox is checked, make it look "pressed" */
+input:checked + .neomorphic-checkbox {
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px rgba(255, 255, 255, 0.9); /* Inset shadow for pressed effect */
+    background: rgb(245, 245, 220); /* Slightly darker background when pressed */
+}
+
+.neomorphic-out{
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(255, 255, 255, 0.9);
+}
+
+.neomorphic-in{
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2), inset -5px -5px 10px rgba(255, 255, 255, 0.9);
+}
+

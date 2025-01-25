@@ -1,0 +1,35 @@
+body {
+    background-image: url('../images/background_triangles.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.first-section{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;    
+}
+
+.image-section{
+    display: flex;
+    gap: 50px;
+
+    img{
+        width: 200px;
+        height: 200px;
+    }
+    button{
+        height: 100px;
+        width: 150px;
+        border-radius: 20%;
+    }
+}
