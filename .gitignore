@@ -1,0 +1,33 @@
+# Virtual environment
+venv/
+env/
+
+# Python-related
+*.pyc
+*.pyo
+*.log
+__pycache__/
+
+# Django-related
+db.sqlite3
+media/
+*.pot
+*.py[co]
+
+# Migrations
+*/migrations/
+
+# Static files (collected in production)
+staticfiles/
+productionfiles/
+
+# Environment variables
+.env
+
+# IDE settings
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
