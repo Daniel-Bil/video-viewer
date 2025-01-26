@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .models import Profile
+from colorama import Fore
 
 @login_required
 def update_profile_image(request):
@@ -149,6 +150,13 @@ def upload(request):
 
             # Load the video using MoviePy
             with VideoFileClip(video_path) as clip:
+                print(f"{Fore.LIGHTBLUE_EX} {clip.duration=} {Fore.RESET}")
+                if not (float(operations.get("start",0)) == 0) or not (float(operations.get("end",0)) == 0):
+                    start_time = float(operations.get("start"))
+                    end_time = float(operations.get("end"))
+                    if end_time < clip.duration and end_time > start_time:
+                        print(f"clip.duration = {clip.duration} start:{start_time} end:{end_time}")
+                        clip = clip.subclip(start_time, end_time)
 
                 if (volume_change := operations.get("volume")) != "1" and not operations.get("mute"):
                     if int(volume_change)<0:

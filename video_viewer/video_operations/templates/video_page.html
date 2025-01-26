@@ -109,7 +109,7 @@
                             <option value="(7680,4320)">7680 x 4320</option>
                             <option value="(3840,2160)">3840 x 2160</option>
                             <option value="(2560,1440)">2560 x 1440</option>
-                            <option value="(1920,1080)">1920 x 1080</option>
+                            <option value="(1920,1080)" selected>1920 x 1080</option>
                             <option value="(1280,720)">1280 x 720</option>
                             <option value="(854,480)">854 x 480</option>
                             <option value="(640,360)">640 x 360</option>
@@ -126,6 +126,31 @@
                             <i class="fa-solid fa-volume-none"></i>
                         </div>
                     </label>
+                </div>
+                <div class="operation-item-wrapper">
+                    <div class="operation-div-wrapper">
+                        <div class="sub-clip-operation">
+                            <abbr title="get a shorter clip from main Clip"><span>Sub Clip</span></abbr>
+                            <div class="time-holder-wrapper" id="time-start">
+                                <span>Start</span>
+                                <div class="time-holder">
+                                    <abbr title="Minutes"><span>M:</span></abbr>
+                                    <input type="number" min="0" id="start-minute-input" value="0">
+                                    <abbr title="Second"><span>S:</span></abbr>
+                                    <input type="number" min="0" id="start-second-input" value="0">
+                                </div>
+                            </div>
+                            <div class="time-holder-wrapper" id="time-end">
+                                <span>End</span>
+                                <div class="time-holder">
+                                    <abbr title="Minutes"><span>M:</span></abbr>
+                                    <input type="number" min="0" id="end-minute-input" value="0">
+                                    <abbr title="Second"><span>S:</span></abbr>
+                                    <input type="number" min="0" id="end-second-input" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <select id="extension-select">

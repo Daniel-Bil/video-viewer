@@ -13,6 +13,12 @@ const extensionSelect = document.getElementById("extension-select")
 const resolutionSelect = document.getElementById("resolution-select")
 const muteCheck = document.getElementById("mute_operation")
 
+const startMinuteInput = document.getElementById("start-minute-input")
+const startSecondInput = document.getElementById("start-second-input")
+
+const endMinuteInput = document.getElementById("end-minute-input")
+const endSecondInput = document.getElementById("end-second-input")
+
 inputFile.addEventListener("change", uploadVideo);
 
 function uploadVideo(){
@@ -58,6 +64,9 @@ uploadButton.addEventListener('click', async () =>{
     operations.extension = extensionSelect.value
     operations.resolution = resolutionSelect.value
     operations.mute = muteCheck.checked
+    console.log(startMinuteInput.value)
+    operations.start = Number(startMinuteInput.value) * 60 + Number(startSecondInput.value)
+    operations.end = Number(endMinuteInput.value) * 60 + Number(endSecondInput.value)
     console.log(operations)
 
     // Prepare FormData

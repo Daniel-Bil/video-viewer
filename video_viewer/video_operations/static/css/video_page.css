@@ -5,7 +5,7 @@
 }
 
 body{
-    background-image: url('../images/background_2.jpg');
+    background-image: url('../images/background_triangles_rotated.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
@@ -14,6 +14,7 @@ body{
     flex-direction: column;
     justify-content: center;
 }
+
 .first-section, .second-section{
     display: flex;
     justify-content: center;
@@ -22,35 +23,43 @@ body{
     width: 100%;
     /* background-color: aqua; */
     column-gap: 20px;
-    padding-top: 100px;
+    padding-top: 150px;
 }
 
-
+.video-section-wrapper{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-content: center;*/
+    align-items: center;
+}
 
 .operations-section, .video-section{
     position: relative;
     min-width: 400px;
-    height: 450px;
-    background: rgba(255, 255, 255, 0.2);
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 20px;
-    justify-content: center;
-    align-items: flex-start;
+    min-height: 450px;
+    background: transparent;
     border: 2px solid rgba(255,255,255,0.5);
     border-radius: 20px;
-    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 20px 5px rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(30px);
 }
 
 .video-section{
-    align-content: center;
-    justify-items: center;
+    display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.operations-section{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 10px 20px;
+    column-gap: 20px;
+
 }
 .operation-item-wrapper{
-    
-    
-    /* background-color: aquamarine; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,6 +86,7 @@ body{
     gap: 10px;
     font-size: 2em;
     box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.5);
+    color:#fff;
 
 }
 
@@ -91,11 +101,13 @@ body{
     gap: 10px;
     font-size: 2em;
     box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.5);
+    color: #fff;
 }
 
 .operation-button{
     background: transparent;
     border-radius: 10px;
+    color:#fff;
 }
 
 .sound-button, .rotation-button{
@@ -106,6 +118,7 @@ body{
 
 .operation-label-wrapper:has(input[type="checkbox"]:checked) {
     backdrop-filter: blur(5px);
+    color: rgba(216, 37, 131, 1);
 }
 
 #upload-button{
@@ -121,15 +134,16 @@ body{
     color: #fff;
     &:hover{
         backdrop-filter: blur(5px);
-        color: gold;
+        color: rgb(29,216,219);
     }
 }
 
 #drop-area{
-    width:500px;
-    height:300px;
+    color:#fff;
+    width: 500px;
+    height: 300px;
     padding: 20px;
-    background-color: #fff;
+    /* background-color: #fd0202; */
     border-radius: 10px;
 }
 
@@ -137,7 +151,7 @@ body{
     width: 100%;
     height: 100%;
     border-radius: 5px;
-    border: 2px dashed black;
+    border: 2px dashed rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
 
@@ -155,9 +169,10 @@ body{
 #delete-video-button{
     position: absolute;
     background: transparent;
+    color: #fff;
     top: 100px;
     right: 10px;
-    opacity: 0.3;
+    opacity: 0.4;
     &:hover{
         opacity: 1;
     }
@@ -183,7 +198,7 @@ nav{
     color:#fff;
     img{
         
-        height: 40px;
+        height: 60px;
 
     }
     a{
@@ -203,8 +218,8 @@ nav{
         text-align: center;
         img{
         
-            height: 40px;
-            width: 40px;
+            height: 50px;
+            width: 50px;
             border-radius: 50%;
         }
     }
@@ -222,3 +237,53 @@ nav{
 
 
 /* ------------------------------ NAV BAR END -------------------------- */
+
+/* --------------------------- Sub clip -------------------------------- */
+
+.sub-clip-operation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-holder-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield; /* Remove spinner in Firefox */
+    }
+
+}
+.time-holder{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+
+    input{
+        width: 50px;
+        height: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 5px;
+        text-align: center;
+        &:focus{
+            box-shadow: 3px 3px 10px 3px rgba(255, 255, 255, 0.5);
+        }
+    }
+
+}
+/* --------------------------- Sub clip END -------------------------------- */
+
+abbr{
+    text-decoration: none;
+}
