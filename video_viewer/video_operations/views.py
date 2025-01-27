@@ -53,14 +53,13 @@ def profile_view(request, username):
     return render(request, 'profile_page.html', context)
 
 def register(request):
-    print("register aaaaaaaaaaaaaaaaaa")
     if request.method == 'POST':
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        print(email)
-        print(password1)
-        print(password2)
+        print(f"{email=}")
+        print(f"{password1=}")
+        print(f"{password2=}")
         # Add user to database
         # Check if passwords match
         if password1 != password2:
@@ -73,6 +72,7 @@ def register(request):
             messages.error(request, "Login already exists!")
         else:
             # Create the user
+            print(f"{Fore.CYAN} Create User {Fore.RESET}")
             user = User.objects.create_user(username=username, password=password1, email=email)
             Profile.objects.create(user=user, image_id=0)
             messages.success(request, "Account created successfully!")
