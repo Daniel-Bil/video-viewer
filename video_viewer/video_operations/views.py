@@ -192,7 +192,7 @@ def upload(request):
                     clip = clip.without_audio()
 
                 resolution = operations.get("resolution")
-                if resolution:
+                if resolution is not None and not (resolution == "None"):
                     # Parse the resolution string into a tuple of integers
                     width, height = map(int, resolution.strip("()").split(","))
 
