@@ -21,6 +21,16 @@ const endSecondInput = document.getElementById("end-second-input")
 
 inputFile.addEventListener("change", uploadVideo);
 
+dropArea.addEventListener("dragover", function(e){
+    e.preventDefault();
+})
+dropArea.addEventListener("drop", function(e){
+    e.preventDefault();
+    inputFile.files = e.dataTransfer.files;
+    uploadVideo();
+})
+
+
 function uploadVideo(){
     const file = inputFile.files[0]; // Get the first selected file
     if (file) {
