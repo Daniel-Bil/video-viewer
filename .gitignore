@@ -46,3 +46,8 @@ Thumbs.db
 *.ogg
 *.flac
 *.aac
+
+# Ignore images
+*.png
+*.jpg
+*.gif
