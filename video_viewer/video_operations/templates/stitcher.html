@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+
+    <link rel="stylesheet" href="{% static 'css/stitcher.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+    <title>Stitcher</title>
+</head>
+<body>
+    <h2 style="text-align: center;">Drag & Drop Image Uploader</h2>
+
+    <div id="upload-area" class="upload-area">
+        Drag & drop images here or <br> click to select files
+        <input type="file" id="file-input" accept="image/*" multiple hidden>
+    </div>
+
+    <div id="image-preview" class="image-container"></div>
+    <button id="upload-button">Upload</button>
+    
+    <!-- Stitched Image Preview -->
+    <img id="stitchedPreview" style="display:none; max-width: 100%; margin-top: 10px; border: 1px solid #ddd; border-radius: 8px;"/>
+
+    <!-- Download Button -->
+    <a id="downloadButton" style="display:none; text-decoration: none; background: #007bff; color: white; padding: 10px 15px; border-radius: 5px; margin-top: 10px; display: inline-block;">Download Stitched Image</a>
+
+
+    <script src="{% static 'js/stitcher.js' %}"></script>
+    <!-- <script src="../static/js/stitcher_main.js"></script> -->
+</body>
+</html>

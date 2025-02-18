@@ -11,5 +11,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('profile/update_profile_image/', views.update_profile_image, name='profile_image_update'),
     path('profile/<str:username>/', views.profile_view, name='profile'),
+    path('stitcher/', views.stitcher, name='stitcher'),
+    path('stitch_images/', views.stitch_images, name='stitch_images'),
 
 ]

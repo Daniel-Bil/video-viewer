@@ -20,7 +20,7 @@
     <!-- header -->
     <nav>
         <img src="{% static 'images/video-viewer-logo.png' %}" alt="logo Video-Viewer" id="logo_img">
-        <a href="#">Other Projects</a>
+        <a href="{% url 'stitcher' %}">Other Projects</a>
         <div class="profile-section">
 
             {% if profile_image == 0 %}

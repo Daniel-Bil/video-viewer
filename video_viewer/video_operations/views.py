@@ -1,6 +1,8 @@
 import json
+import os
 import tempfile
 
+import numpy as np
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -12,6 +14,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .models import Profile
 from colorama import Fore
+import imutils
+
+from PIL import Image
+import cv2
 
 @login_required
 def update_profile_image(request):
@@ -242,3 +248,85 @@ def upload(request):
             return HttpResponse("Error processing video.", status=500)
 
     return HttpResponse("Invalid request", status=400)
+
+
+def stitcher(request):
+    return render(request, 'stitcher.html')
+@csrf_exempt
+def stitch_images(request):
+    if request.method == "POST":
+        # Ensure files are uploaded
+        if 'images' not in request.FILES:
+            return JsonResponse({"error": "No images uploaded"}, status=400)
+
+        images_list = []
+
+        print(os.getcwd())
+
+        for file in request.FILES.getlist('images'):
+            # Read file into OpenCV format
+            image = Image.open(file)  # Read with PIL
+            image = np.array(image)  # Convert to NumPy array
+            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)  # Convert to OpenCV BGR format
+
+            images_list.append(image)
+
+        if len(images_list) < 2:
+            return JsonResponse({"error": "At least two images are required for stitching"}, status=400)
+
+
+
+        stitcher = cv2.Stitcher.create(cv2.Stitcher_PANORAMA)
+
+        status, panorama = stitcher.stitch(images_list)
+        # Create a Stitcher object and stitch the images
+        # stitcher = cv2.Stitcher.create(cv2.Stitcher_PANORAMA)
+        # status, stitched = stitcher.stitch(images_list)
+        #
+        # if status != cv2.Stitcher_OK:
+        #     print("Error during stitching: Status Code", status)
+        #     return None
+        #
+        # # Add a border around the stitched image
+        # stitched = cv2.copyMakeBorder(stitched, 10, 10, 10, 10, cv2.BORDER_CONSTANT, (0, 0, 0))
+        #
+        # # Convert to grayscale and threshold
+        # gray = cv2.cvtColor(stitched, cv2.COLOR_BGR2GRAY)
+        # thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY)[1]
+        # cv2.imwrite(f"{os.getcwd()}thresh.png", thresh)
+        # # Find the external contours
+        # cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # cnts = imutils.grab_contours(cnts)
+        # c = max(cnts, key=cv2.contourArea)
+        #
+        # # Create a mask with a bounding rectangle
+        # mask = np.zeros(thresh.shape, dtype="uint8")
+        # (x, y, w, h) = cv2.boundingRect(c)
+        # cv2.rectangle(mask, (x, y), (x + w, y + h), 255, -1)
+        #
+        # # Erode the mask to find the largest inner rectangle
+        # minRect = mask.copy()
+        # sub = mask.copy()
+        # while cv2.countNonZero(sub) > 0:
+        #     minRect = cv2.erode(minRect, None)
+        #     sub = cv2.subtract(minRect, thresh)
+        #
+        # # Find contours of the minimum rectangular mask
+        # cnts = cv2.findContours(minRect.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        # cnts = imutils.grab_contours(cnts)
+        # c = max(cnts, key=cv2.contourArea)
+        # (x, y, w, h) = cv2.boundingRect(c)
+        #
+        # # Crop the final stitched image
+        # panorama = stitched[y:y + h, x:x + w]
+
+        if panorama is None:
+            return JsonResponse({"error": "Stitching failed"}, status=500)
+
+        cv2.imwrite(f"{os.getcwd()}panorama.png", panorama)
+
+        # Convert stitched image to bytes (for response)
+        _, buffer = cv2.imencode('.png', panorama)
+        return HttpResponse(buffer.tobytes(), content_type="image/png")
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
