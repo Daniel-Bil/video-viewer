@@ -12,6 +12,8 @@ const volumeSpan = document.getElementById("volume-span")
 const extensionSelect = document.getElementById("extension-select")
 const resolutionSelect = document.getElementById("resolution-select")
 const muteCheck = document.getElementById("mute_operation")
+const backgroundRemoveCheck = document.getElementById("background_remove")
+const faceBlurCheck = document.getElementById("face_blur")
 
 const startMinuteInput = document.getElementById("start-minute-input")
 const startSecondInput = document.getElementById("start-second-input")
@@ -74,6 +76,9 @@ uploadButton.addEventListener('click', async () =>{
     operations.extension = extensionSelect.value
     operations.resolution = resolutionSelect.value
     operations.mute = muteCheck.checked
+    operations.background_remove = backgroundRemoveCheck.checked
+    operations.face_blur = faceBlurCheck.checked
+
     console.log(startMinuteInput.value)
     operations.start = Number(startMinuteInput.value) * 60 + Number(startSecondInput.value)
     operations.end = Number(endMinuteInput.value) * 60 + Number(endSecondInput.value)

@@ -109,12 +109,12 @@
                             <option value="(7680,4320)">7680 x 4320</option>
                             <option value="(3840,2160)">3840 x 2160</option>
                             <option value="(2560,1440)">2560 x 1440</option>
-                            <option value="(1920,1080)" selected>1920 x 1080</option>
+                            <option value="(1920,1080)">1920 x 1080</option>
                             <option value="(1280,720)">1280 x 720</option>
                             <option value="(854,480)">854 x 480</option>
                             <option value="(640,360)">640 x 360</option>
                             <option value="(426,240)">426 x 240</option>
-                             <option value="None">The same</option>
+                             <option value="None" selected>The same</option>
                         </select>
                     </div>
                 </div>
@@ -153,9 +153,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="operation-item-wrapper">
+                    <label class="operation-label-wrapper" for="background_remove">
+                        <input type="checkbox" name="background_remove" id="background_remove" hidden>
+                        <div class="operation-item-checkbox">
+                            <span>remove background</span>
+
+
+                        </div>
+                    </label>
+                </div>
+                <div class="operation-item-wrapper">
+                    <label class="operation-label-wrapper" for="face_blur">
+                        <input type="checkbox" name="face_blur" id="face_blur" hidden>
+                        <div class="operation-item-checkbox">
+                            <span>face_blur</span>
+
+
+                        </div>
+                    </label>
+                </div>
+
+
             </div>
             <select id="extension-select">
-                <option value="MP4">MP4</option>
+                <option value="MP4" selected>MP4</option>
                 <option value="AVI">AVI</option>
                 <option value="MOV">MOV</option>
                 <option value="MP3">MP3</option>

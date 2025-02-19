@@ -14,10 +14,12 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .models import Profile
 from colorama import Fore
-import imutils
 
 from PIL import Image
 import cv2
+
+from .video_processing.utils import remove_background_function, blur_faces
+
 
 @login_required
 def update_profile_image(request):
@@ -189,7 +191,13 @@ def upload(request):
                 if operations.get("flip"):
                     clip = clip.fx(vfx.mirror_x)
 
+                if operations.get("face_blur"):
+                    print("face_blur True")
+                    clip = clip.fl_image(blur_faces)
 
+                if operations.get("background_remove"):
+                    print("background remove True")
+                    clip = clip.fl_image(remove_background_function)
 
                 if (rotation_change := operations.get("rotation")) != '0':
                     clip = clip.rotate(int(rotation_change))
