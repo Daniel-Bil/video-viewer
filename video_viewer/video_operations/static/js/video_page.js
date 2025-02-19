@@ -21,6 +21,9 @@ const startSecondInput = document.getElementById("start-second-input")
 const endMinuteInput = document.getElementById("end-minute-input")
 const endSecondInput = document.getElementById("end-second-input")
 
+import BACKEND_URL from './config.js';
+
+
 inputFile.addEventListener("change", uploadVideo);
 
 dropArea.addEventListener("dragover", function(e){
@@ -90,7 +93,7 @@ uploadButton.addEventListener('click', async () =>{
     formData.append('operations', JSON.stringify(operations));
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/upload/', { // Replace with your backend URL
+        const response = await fetch(`${BACKEND_URL}/upload/`, {
             method: 'POST',
             body: formData
         });
