@@ -220,7 +220,7 @@ rotateRightButton.onclick = function(){
 
 
 function updateProgress() {
-    fetch('/progress')
+    fetch(`${BACKEND_URL}/progress/`)
         .then(response => response.json())
         .then(data => {
             document.getElementById("progress").innerText = data.progress;
