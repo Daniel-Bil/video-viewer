@@ -44,3 +44,10 @@ def blur_faces(frame):
             frame[y:y + h_bbox, x:x + w_bbox] = blurred_face  # Replace face with blurred version
 
     return frame
+
+
+if __name__ == "__main__":
+    import sys
+    mp_face_detection = mp.solutions.face_detection
+    face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.5)
+    print(sys.getsizeof(face_detection))

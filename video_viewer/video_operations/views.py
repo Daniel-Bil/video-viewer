@@ -18,7 +18,7 @@ from colorama import Fore
 from PIL import Image
 import cv2
 
-from .video_processing.utils import remove_background_function, blur_faces
+from .video_processing.video_operations_utils import process_video
 
 
 @login_required
@@ -156,106 +156,25 @@ def upload(request):
                     temp_file.write(video_file.read())
                     video_path = temp_file.name
 
-            # Load the video using MoviePy
-            with VideoFileClip(video_path) as clip:
-                print(f"{Fore.LIGHTBLUE_EX} {clip.duration=} {Fore.RESET}")
-                if not (float(operations.get("start",0)) == 0) or not (float(operations.get("end",0)) == 0):
-                    start_time = float(operations.get("start"))
-                    end_time = float(operations.get("end"))
-                    if end_time < clip.duration and end_time > start_time:
-                        print(f"clip.duration = {clip.duration} start:{start_time} end:{end_time}")
-                        clip = clip.subclip(start_time, end_time)
 
-                if (volume_change := operations.get("volume")) != "1" and not operations.get("mute"):
-                    if int(volume_change)<0:
-                        clip = clip.volumex(1/int(volume_change))
-                    else:
-                        clip = clip.volumex(int(volume_change))
-
-                # Check if the operation is to extract audio
-                if operations.get("extension") == "MP3":
-                    # Use a temporary file to save the audio
-                    with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_output_file:
-                        temp_audio_path = temp_output_file.name
-
-                    # Write the audio to the temporary file
-                    clip.audio.write_audiofile(temp_audio_path)
-
-                    # Open the file again to send it in the response
-                    with open(temp_audio_path, "rb") as audio_file:
-                        response = HttpResponse(audio_file.read(), content_type="audio/mpeg")
-                        response["Content-Disposition"] = 'attachment; filename="output_audio.mp3"'
-
-                    return response
-
-                if operations.get("flip"):
-                    clip = clip.fx(vfx.mirror_x)
-
-                if operations.get("face_blur"):
-                    print("face_blur True")
-                    clip = clip.fl_image(blur_faces)
-
-                if operations.get("background_remove"):
-                    print("background remove True")
-                    clip = clip.fl_image(remove_background_function)
-
-                if (rotation_change := operations.get("rotation")) != '0':
-                    clip = clip.rotate(int(rotation_change))
-
-                if operations.get("mute"):
-                    clip = clip.without_audio()
-
-                resolution = operations.get("resolution")
-                if resolution is not None and not (resolution == "None"):
-                    # Parse the resolution string into a tuple of integers
-                    width, height = map(int, resolution.strip("()").split(","))
-
-                    # Resize the video to the specified resolution
-                    clip = clip.resize(newsize=(width, height))
-
-                if operations.get("extension") == "GIF":
-                    # Save the processed video as a GIF
-                    with tempfile.NamedTemporaryFile(suffix=".gif", delete=False) as temp_output_file:
-                        temp_output_path = temp_output_file.name
-                        clip.write_gif(temp_output_path, fps=1)  # Adjust fps as needed
-
-                    # Return the GIF
-                    with open(temp_output_path, "rb") as output_file:
-                        response = HttpResponse(output_file.read(), content_type="image/gif")
-                        response["Content-Disposition"] = 'inline; filename="processed.gif"'
-                        print(response)
-                        return response
-                else:
-                    # Save the processed video as MP4 (default case)
-                    if operations.get("extension") == "MP4":
-                        suffix = "mp4"
-                        content_type = "mp4"
-                    elif operations.get("extension") == "AVI":
-                        suffix = "avi"
-                        content_type = "x-msvideo"
-                    elif operations.get("extension") == "MOV":
-                        suffix = "mov"
-                        content_type = "quicktime"
-                    else:
-                        raise ValueError("Unsupported extension")
-
-                    with tempfile.NamedTemporaryFile(suffix=f".{suffix}", delete=False) as temp_output_file:
-                        temp_output_path = temp_output_file.name
-                        clip.write_videofile(temp_output_path, codec="libx264", audio_codec="aac")
-
-                    # Return the video
-                    with open(temp_output_path, "rb") as output_file:
-                        response = HttpResponse(output_file.read(), content_type=f"video/{content_type}")
-                        response["Content-Disposition"] = f'inline; filename="processed_video.{suffix}"'
-                        return response
-
-
+            return process_video(video_path=video_path, operations=operations)
+            # return process_video_multicore(video_path=video_path, operations=operations)
 
         except Exception as e:
             print(f"Error processing video: {e}")
             return HttpResponse("Error processing video.", status=500)
 
     return HttpResponse("Invalid request", status=400)
+
+@csrf_exempt
+def get_progress(request):
+    try:
+        with open("progress.txt", "r") as f:
+            progress = f.read()
+    except FileNotFoundError:
+        print(f"{Fore.RED}Warning no progress file found{Fore.RESET}")
+        return JsonResponse({"progress": "0.0 None"}, status=200)
+    return JsonResponse({"progress": progress}, status=200)
 
 
 def stitcher(request):

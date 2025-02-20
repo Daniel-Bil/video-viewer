@@ -91,17 +91,24 @@ uploadButton.addEventListener('click', async () =>{
     const formData = new FormData();
     formData.append('video', file);
     formData.append('operations', JSON.stringify(operations));
-
+    let progressInterval = setInterval(updateProgress, 1000);
+    
     try {
         const response = await fetch(`${BACKEND_URL}/upload/`, {
             method: 'POST',
             body: formData
         });
+        
+        
+
 
         if (response.ok) {
             const contentType = response.headers.get('Content-Type');
             const blob = await response.blob();
             const blobURL = URL.createObjectURL(blob);
+
+            
+            console.log("Processing complete. Stopped updating progress.");
 
             if (contentType === 'image/gif') {
                 const gifPreview = document.getElementById('gifPreview');
@@ -130,8 +137,10 @@ uploadButton.addEventListener('click', async () =>{
             }
         } 
     } catch (error) {
+        clearInterval(progressInterval); 
         console.error("Error:", error);
     }
+    clearInterval(progressInterval); 
 })
 
 
@@ -204,4 +213,22 @@ rotateRightButton.onclick = function(){
     if(rotationSpan.textContent<315){
         rotationSpan.textContent = Number(rotationSpan.textContent)+45
     }
+}
+
+
+
+
+
+function updateProgress() {
+    fetch('/progress')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("progress").innerText = data.progress;
+
+            // Check if the video processing is done, and stop the updates if it is
+            if (data.progress.includes("100%")) {
+                clearInterval(progressInterval);  // Stop the progress updates
+                console.log("Processing complete. Stopped updating progress.");
+            }
+        });
 }
