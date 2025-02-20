@@ -219,16 +219,23 @@ rotateRightButton.onclick = function(){
 
 
 
-function updateProgress() {
-    fetch(`${BACKEND_URL}/progress/`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("progress").innerText = data.progress;
+async function updateProgress() {
+    try {
+        // Fetch progress from backend
+        const response = await fetch(`${BACKEND_URL}/progress/`);
+        // Wait for the response to be parsed as JSON
+        const data = await response.json();
+        console.log(data)
 
-            // Check if the video processing is done, and stop the updates if it is
-            if (data.progress.includes("100%")) {
-                clearInterval(progressInterval);  // Stop the progress updates
-                console.log("Processing complete. Stopped updating progress.");
-            }
-        });
+        // Update the progress on the webpage
+        document.getElementById("progress").innerText = data.progress;
+
+        // Check if the video processing is done, and stop the updates if it is
+        if (data.progress.includes("100%")) {
+            // clearInterval(progressInterval);  // Stop the progress updates
+            console.log("Processing complete. Stopped updating progress.");
+        }
+    } catch (error) {
+        console.error("Error fetching progress:", error);
+    }
 }
