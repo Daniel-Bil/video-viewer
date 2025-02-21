@@ -1,6 +1,7 @@
 import json
 import os
 import tempfile
+from pathlib import Path
 
 import numpy as np
 from django.contrib.auth.decorators import login_required
@@ -168,12 +169,25 @@ def upload(request):
 
 @csrf_exempt
 def get_progress(request):
+    progress_file_path = Path("progress.txt")
+
+    # Check if the progress file exists
+    if not progress_file_path.exists():
+        print(f"{Fore.RED}Warning: No progress file found{Fore.RESET}")
+        # Return a default progress value when the file is not found
+        return JsonResponse({"progress": "0.0% - No progress available"}, status=200)
+
     try:
-        with open("progress.txt", "r") as f:
-            progress = f.read()
-    except FileNotFoundError:
-        print(f"{Fore.RED}Warning no progress file found{Fore.RESET}")
-        return JsonResponse({"progress": "0.0 None"}, status=200)
+        with open(progress_file_path, "r") as f:
+            progress = f.read().strip()
+    except Exception as e:
+        print(f"{Fore.RED}Error reading progress file: {str(e)}{Fore.RESET}")
+        return JsonResponse({"progress": "Error reading progress file"}, status=500)
+
+    # Ensure progress is not empty
+    if not progress:
+        return JsonResponse({"progress": "0.0% - Progress data is empty"}, status=200)
+
     return JsonResponse({"progress": progress}, status=200)
 
 
